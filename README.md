@@ -113,3 +113,21 @@ npm run smoke
 ```
 
 `npm test` runs the unit tests. They do not launch a browser and do not call Squash. `npm run build` writes `dist/`. `npm pack` and `npm publish` build first. `npm run smoke` packs the package, installs it in a temporary CommonJS project, and loads the public entry points.
+
+## Publishing
+
+A tag `v<version>` publishes that version to the npm registry. The tag has to equal the `version` in `package.json`: `v0.1.0` publishes `0.1.0`. The workflow runs the unit tests, the typecheck, and the packed-install smoke test before `npm publish`. A version already on the registry is skipped, so a failed run can be re-run. npm versions are immutable.
+
+Auth is [trusted publishing](https://docs.npmjs.com/trusted-publishers). On the package settings at npmjs, add a GitHub Actions publisher:
+
+| Field                | Value                 |
+| -------------------- | --------------------- |
+| Organization or user | `ianoflynnautomation` |
+| Repository           | `playwright-squash`   |
+| Workflow filename    | `npm-publish.yml`     |
+| Environment name     | leave empty           |
+| Allowed actions      | `npm publish`         |
+
+The package has to exist before that setting can be saved. Publish `0.1.0` once from a logged-in machine (`npm publish`), add the publisher the same day, then push tags for later versions. A publisher that does not complete a publish within two days of being created expires.
+
+The optional repository secret `NPM_TOKEN` publishes when it is set. Remove it once trusted publishing works. While the secret is set, npm uses the token and does not validate the publisher.
