@@ -1,14 +1,5 @@
 name: Publish to npm
 
-# Tags only. `v0.1.0` publishes the version in package.json. npm cannot
-# replace a version, and a version already on the registry is skipped.
-#
-# Auth is trusted publishing (OIDC). On npmjs the publisher must name this
-# file, leave the environment empty, and allow `npm publish`. A publisher
-# created after 2026-09-03 allows only `npm stage publish` until that is
-# selected. The package has to exist before the publisher can be saved, so
-# the first publish can use the repository secret NPM_TOKEN.
-
 on:
   push:
     tags: ['v*.*.*']
@@ -34,15 +25,12 @@ jobs:
         with:
           persist-credentials: false
 
-      # No dependency cache. A restored cache would be packed into a release
-      # that cannot be replaced.
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      # Trusted publishing needs npm 11.5.1 or newer. Node 22 ships an older npm.
       - run: npm install -g npm@11.21.1
 
       - run: npm ci
