@@ -1,6 +1,6 @@
 {
   "name": "@playwright-squash/playwright-squash",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sync Playwright tests into Squash TM and publish results into a campaign iteration.",
   "license": "ISC",
   "author": "Ian O Flynn",
