@@ -1,4 +1,4 @@
-# @ianoflynnautomation/playwright-squash
+# @playwright-squash/playwright-squash
 
 Syncs [Playwright](https://playwright.dev) tests into [Squash TM](https://www.squashtest.com/) as test cases, and publishes run results into a campaign iteration.
 
@@ -9,7 +9,7 @@ The package does not ship a folder layout. Each consumer commits its own `squash
 ## Install
 
 ```sh
-npm install --save-dev @ianoflynnautomation/playwright-squash
+npm install --save-dev @playwright-squash/playwright-squash
 ```
 
 `@playwright/test` 1.64.1 or newer is a peer dependency. `zod` 4 is installed with this package. Node.js 22.18 or newer.
@@ -22,7 +22,7 @@ Only tests tagged `@squash` are synced. A field left out stays as Squash has it.
 
 ```ts
 import { test } from '@playwright/test';
-import { squash } from '@ianoflynnautomation/playwright-squash/annotations';
+import { squash } from '@playwright-squash/playwright-squash/annotations';
 
 test.describe('Gyms', { tag: ['@squash'] }, () => {
   test(
@@ -73,16 +73,16 @@ Publish once, from the merged report, never from a shard.
 ```sh
 # Dry-run sync: lists what would be created or updated. No connection required.
 SQUASH_TM_MODE=dry-run npx playwright test --list \
-  --reporter=@ianoflynnautomation/playwright-squash/sync
+  --reporter=@playwright-squash/playwright-squash/sync
 
 # Publish results. Add the reporter in config, or on the command:
 SQUASH_TM_MODE=publish SQUASH_TM_URL=http://localhost:8080/squash \
   SQUASH_TM_TOKEN=… SQUASH_TM_PROJECT_ID=1 \
   SQUASH_TM_CAMPAIGN="Releases/2.4" SQUASH_TM_ITERATION="Nightly" \
-  npx playwright test --reporter=list,@ianoflynnautomation/playwright-squash/results
+  npx playwright test --reporter=list,@playwright-squash/playwright-squash/results
 ```
 
-`@ianoflynnautomation/playwright-squash/select` writes a Playwright `--test-list` for `SQUASH_TM_FILTER_FOLDER` or `SQUASH_TM_TEST_SUITE_ID`. The `playwright-squash` command runs that pass, then the tests.
+`@playwright-squash/playwright-squash/select` writes a Playwright `--test-list` for `SQUASH_TM_FILTER_FOLDER` or `SQUASH_TM_TEST_SUITE_ID`. The `playwright-squash` command runs that pass, then the tests.
 
 ## Commands
 
@@ -128,6 +128,6 @@ Auth is [trusted publishing](https://docs.npmjs.com/trusted-publishers). On the 
 | Environment name     | leave empty           |
 | Allowed actions      | `npm publish`         |
 
-The package has to exist before that setting can be saved. Publish `0.1.0` once from a logged-in machine (`npm publish`), add the publisher the same day, then push tags for later versions. A publisher that does not complete a publish within two days of being created expires.
+The package has to exist before that setting can be saved. Log in as the npm user `iofautomation` and publish `0.1.0` once (`npm login`, then `npm publish`). That account publishes into the npm org `playwright-squash`. Add the publisher the same day, then push tags for later versions. A publisher that does not complete a publish within two days of being created expires. The table above is the GitHub repository. It is separate from the npm org.
 
 The optional repository secret `NPM_TOKEN` publishes when it is set. Remove it once trusted publishing works. While the secret is set, npm uses the token and does not validate the publisher.

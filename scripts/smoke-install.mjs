@@ -24,10 +24,10 @@ try {
     join(consumer, 'load.cjs'),
     `
 const assert = require('node:assert/strict');
-const { squash } = require('@ianoflynnautomation/playwright-squash/annotations');
-const results = require('@ianoflynnautomation/playwright-squash/results');
-const sync = require('@ianoflynnautomation/playwright-squash/sync');
-const select = require('@ianoflynnautomation/playwright-squash/select');
+const { squash } = require('@playwright-squash/playwright-squash/annotations');
+const results = require('@playwright-squash/playwright-squash/results');
+const sync = require('@playwright-squash/playwright-squash/sync');
+const select = require('@playwright-squash/playwright-squash/select');
 
 const annotations = squash({ weight: 'medium', status: 'approved', nature: 'functional', type: 'regression' });
 assert.ok(Array.isArray(annotations) && annotations.length > 0);
@@ -45,7 +45,7 @@ console.log('installed package exports loaded');
 
   writeFileSync(
     join(consumer, 'import-check.ts'),
-    `import { squash } from '@ianoflynnautomation/playwright-squash/annotations';
+    `import { squash } from '@playwright-squash/playwright-squash/annotations';
 export const annotations = squash({ weight: 'low', status: 'work in progress', nature: 'functional', type: 'regression' });
 `,
   );
