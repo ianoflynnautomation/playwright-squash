@@ -1,0 +1,5 @@
+{
+  "tag": "@squash",
+  "testCaseFolder": "Playwright",
+  "folderRules": [{ "path": "tests/api/", "folder": "Playwright/API" }]
+}
